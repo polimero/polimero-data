@@ -1,0 +1,40 @@
+<!--
+@license
+Copyright (c) 2015 Jan Aerts. All rights reserved.
+The complete set of contributors may be found at http://bitbucket.org/vda-lab/polimero/CONTRIBUTORS.txt
+-->
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<!--
+A non-visual element for loading data into the application
+
+Example:
+
+    <polimero-data url="data/data.csv" data="{{data}}"></polimero-data>
+
+-->
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<polymer-element name="polimero-data" attributes="url data">
+	<template>
+		Hi there
+	</template>
+	<script>
+		Polymer('polimero-data', {
+			ready: function() {
+				var me = this
+				me.selected = []
+				me.data = []
+				d3.csv(me.url, function(data) {
+					data.forEach(function(d,i) {
+						var datapoint = {}
+						datapoint['id'] = 'polimero_id_' + i // Adding an ID to each object
+						datapoint['data'] = d;
+						me.data.push(datapoint)
+					});
+				})
+				return me.data
+			}
+		})
+	</script>
+</polymer-element>
